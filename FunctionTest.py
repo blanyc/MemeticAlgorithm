@@ -12,6 +12,16 @@ class FunctionTest(unittest.TestCase):
 
         self.assertEqual(expectedResult, result)
 
+    def test_Bohachevsky1FunctionLess(self):
+        x1 = -9
+        x2 = 9
+        resultLessFrom = 0
+        functionUnderTest = FunctionToSupportTests.Bohachevsky1Function()
+
+        result = functionUnderTest.CalculateValue(x1, x2)
+
+        self.assertLess(result, resultLessFrom)
+
     def test_BoothFunction(self):
         x1 = 1
         x2 = 3

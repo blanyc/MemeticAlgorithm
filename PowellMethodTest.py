@@ -9,24 +9,22 @@ class PowellMethodTest(unittest.TestCase):
     def test___Optimaze1D_FirstDirection(self):
         powell = PowellMethod.PowellMethod(4)
         function = FunctionToSupportTests.OneFirstParameterSquare(-1,0,0)
-        sample = Sample.Sample(1,1, function)
+        sample = Sample.Sample(1,1, function, [-10, 10], [-10,10])
         direction = [1, 0]
          
         optimizedSample = powell._PowellMethod__Optimaze1D(sample, direction)
 
-        print(optimizedSample.GetValue())
         self.assertTrue(optimizedSample.GetValue() > -0.01)        
         self.assertTrue(optimizedSample.GetValue() < 0.01)
 
     def test___Optimaze1D_SecoundDirection(self):
         powell = PowellMethod.PowellMethod(4)
         function = FunctionToSupportTests.OneSecoundParameterSquare(-1,0,0)
-        sample = Sample.Sample(1,1, function)
+        sample = Sample.Sample(1,1, function, [-10, 10], [-10,10])
         direction = [0, 1]
 
         optimizedSample = powell._PowellMethod__Optimaze1D(sample, direction)
 
-        print(optimizedSample.GetValue())
         self.assertTrue(optimizedSample.GetValue() > -0.01)        
         self.assertTrue(optimizedSample.GetValue() < 0.01)
 
@@ -34,32 +32,30 @@ class PowellMethodTest(unittest.TestCase):
     def test___Optimaze1D_BothDirection(self):
         powell = PowellMethod.PowellMethod(4)
         function = FunctionToSupportTests.TwoParameterSquare(-1,0,0)
-        sample = Sample.Sample(1,1, function)
+        sample = Sample.Sample(1,1, function, [-10, 10], [-10,10])
         direction = [1, 1]
 
         optimizedSample = powell._PowellMethod__Optimaze1D(sample, direction)
 
-        print(optimizedSample.GetValue())
         self.assertTrue(optimizedSample.GetValue() > -0.01)        
         self.assertTrue(optimizedSample.GetValue() < 0.01)
 
     def test___OptimizeInEachDirection(self):
         powell = PowellMethod.PowellMethod(4)
         function = FunctionToSupportTests.TwoParameterSquare(-1,0,0)
-        sample = Sample.Sample(1,1, function)
+        sample = Sample.Sample(1,1, function, [-10, 10], [-10,10])
         direction = [[1, 0], [0, 1]]
 
         optimizedSample = powell._PowellMethod__OptimizeInEachDirection(sample, direction)
 
-        print(optimizedSample.GetValue())
         self.assertTrue(optimizedSample.GetValue() > -0.01)        
         self.assertTrue(optimizedSample.GetValue() < 0.01)
 
     def test___CalculateConjugateDirection(self):
         powell = PowellMethod.PowellMethod(4)
         function = FunctionToSupportTests.FunctionMock(0,0,0)
-        oldSample = Sample.Sample(1,1, function)
-        newSample = Sample.Sample(3,5, function)
+        oldSample = Sample.Sample(1,1, function, [-10, 10], [-10,10])
+        newSample = Sample.Sample(3,5, function, [-10, 10], [-10,10])
         expectedDirection = [0.5, 1]
 
         newDirection = powell._PowellMethod__CalculateConjugateDirection(oldSample, newSample)
@@ -68,8 +64,8 @@ class PowellMethodTest(unittest.TestCase):
     def test___CalculateConjugateDirectionOpposite(self):
         powell = PowellMethod.PowellMethod(4)
         function = FunctionToSupportTests.FunctionMock(0,0,0)
-        oldSample = Sample.Sample(3,5, function)
-        newSample = Sample.Sample(1,1, function)
+        oldSample = Sample.Sample(3,5, function, [-10, 10], [-10,10])
+        newSample = Sample.Sample(1,1, function, [-10, 10], [-10,10])
         expectedDirection = [-0.5, -1]
 
         newDirection = powell._PowellMethod__CalculateConjugateDirection(oldSample, newSample)
@@ -94,7 +90,7 @@ class PowellMethodTest(unittest.TestCase):
     def test___Optimaze2D_OneSample(self):
         powell = PowellMethod.PowellMethod(4, 0.4)
         function = FunctionToSupportTests.TwoParameterSquare(-1,0,0)
-        sample = Sample.Sample(10.12,-3.87, function)
+        sample = Sample.Sample(10.12,-3.87, function, [-10, 10], [-10,10])
         population = [sample]
          
         optimizedSamples = powell.Optimize2D(population)

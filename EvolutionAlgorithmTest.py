@@ -8,14 +8,14 @@ import copy
 class EvolutionAlgorithmTestSorted(unittest.TestCase):
     def test_MakeReproduction(self):
         function = FunctionToSupportTests.OneFirstParameterSquare(-1,0,0)
-        population = [Sample.Sample(0,0,function), 
-                      Sample.Sample(1,2,function), 
-                      Sample.Sample(2,4,function)]
-        expectedPopulation = [Sample.Sample(0,0,function), 
-                              Sample.Sample(1,2,function), 
-                              Sample.Sample(2,4,function), 
-                              Sample.Sample(0.5,1,function), 
-                              Sample.Sample(1.5,3,function)]
+        population = [Sample.Sample(0,0,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(1,2,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(2,4,function, [-10, 10], [-10,10])]
+        expectedPopulation = [Sample.Sample(0,0,function, [-10, 10], [-10,10]), 
+                              Sample.Sample(1,2,function, [-10, 10], [-10,10]), 
+                              Sample.Sample(2,4,function, [-10, 10], [-10,10]), 
+                              Sample.Sample(0.5,1,function, [-10, 10], [-10,10]), 
+                              Sample.Sample(1.5,3,function, [-10, 10], [-10,10])]
         evolution = EvolutionAlgorithm.EvolutionAlgorithm(5)
         evolution._EvolutionAlgorithm__Population = population
 
@@ -26,11 +26,11 @@ class EvolutionAlgorithmTestSorted(unittest.TestCase):
 
     def test_MutateChild(self):
         function = FunctionToSupportTests.OneFirstParameterSquare(-1,0,0)
-        population = [Sample.Sample(0,0,function), 
-                      Sample.Sample(1,2,function), 
-                      Sample.Sample(2,4,function), 
-                      Sample.Sample(0.5,1,function), 
-                      Sample.Sample(1.5,3,function)]
+        population = [Sample.Sample(0,0,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(1,2,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(2,4,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(0.5,1,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(1.5,3,function, [-10, 10], [-10,10])]
         newPopulation = copy.deepcopy(population)
         evolution = EvolutionAlgorithm.EvolutionAlgorithm(2)
         evolution._EvolutionAlgorithm__Population = population
@@ -45,13 +45,13 @@ class EvolutionAlgorithmTestSorted(unittest.TestCase):
 
     def test_Selection(self):
         function = FunctionToSupportTests.OneFirstParameterSquare(-1,0,0)
-        greatestSample = Sample.Sample(0,0,function)
-        population = [Sample.Sample(1,2,function), 
-                      Sample.Sample(4,4,function), 
-                      Sample.Sample(5,5,function), 
-                      Sample.Sample(6,6,function), 
-                      Sample.Sample(7,7,function), 
-                      Sample.Sample(8,8,function),
+        greatestSample = Sample.Sample(0,0,function, [-10, 10], [-10,10])
+        population = [Sample.Sample(1,2,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(4,4,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(5,5,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(6,6,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(7,7,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(8,8,function, [-10, 10], [-10,10]),
                       greatestSample]
         populationLenght = len(population)
         evolution = EvolutionAlgorithm.EvolutionAlgorithm(2)

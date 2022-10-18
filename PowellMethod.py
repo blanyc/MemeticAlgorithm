@@ -11,7 +11,6 @@ class PowellMethod():
         self.__directions = [[1,0],[0,1]]
 
     def Optimize2D(self, population):
-        print("2D optimized")
         newPopulation = []
         for sample in population:
             oldSample = copy.deepcopy(sample)
@@ -26,12 +25,10 @@ class PowellMethod():
 
     def __SetInitialDirection(self):
         self.__directions = [[1,0],[0,1]]
-        print("Initial direction seted")
 
     def __OptimizeInEachDirection(self, sample, directions):
         for direction in directions:
             sample = self.__Optimaze1D(sample, direction)
-        print("Optimized in each direction")
         return sample
 
     def __SwapDirection(self, newDirection):
@@ -39,7 +36,6 @@ class PowellMethod():
             self.__directions[0] = newDirection
         else:
             self.__directions[1] = newDirection
-        print("Direction swaped")
 
     def __Optimaze1D(self, sample, direction):
         sampleToOptimize = copy.deepcopy(sample)
@@ -54,7 +50,7 @@ class PowellMethod():
             sampleToOptimize.SetParameterA(sample.GetParameterA() + optimizationStep*direction[0]*stepDirection)
             sampleToOptimize.SetParameterB(sample.GetParameterB() + optimizationStep*direction[1]*stepDirection)
 
-            if sampleToOptimize.GetValue()<currentValue:
+            if sampleToOptimize.GetValue()<=currentValue:
                 stepDirection*=(-1)
                 stepWithoutImprovement += 1
                 optimizationStep *= 0.8
@@ -62,8 +58,6 @@ class PowellMethod():
                 sample = copy.deepcopy(sampleToOptimize)
                 currentValue = sampleToOptimize.GetValue()
                 stepWithoutImprovement = 0
-
-        print("1D optimized")
         return sample
 
     def __CalculateConjugateDirection(self, sample, oldSample):
@@ -82,8 +76,6 @@ class PowellMethod():
         parameterB /= denominator
 
         direction = [parameterA, parameterB]
-
-        print("ConjugateDirection")
 
         return direction
 

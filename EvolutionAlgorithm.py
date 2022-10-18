@@ -1,5 +1,6 @@
 import Sample
 import random
+import copy
 
 class EvolutionAlgorithm():
 
@@ -16,18 +17,19 @@ class EvolutionAlgorithm():
 		self.__MakeReproduction()
 		self.__MutateChild()
 		self.__Selection()
-		print("Evolution optimized")
 		return self.__Population
 
 	def __MakeReproduction(self):
 		self.__Population.sort()
-		child = []
+		childs = []
 		for index in range(0,len(self.__Population)-1,1):
 			parameterA = (self.__Population[index].GetParameterA() + self.__Population[index+1].GetParameterA())/2
 			parameterB = (self.__Population[index].GetParameterB() + self.__Population[index+1].GetParameterB())/2
-			child.append(Sample.Sample(parameterA, parameterB, self.__Population[index].function))
-		print("Reproduction")
-		self.__Population += child
+			child = copy.deepcopy(self.__Population[index])
+			child.SetParameterA(parameterA)
+			child.SetParameterB(parameterB)
+			childs.append(child)
+		self.__Population += childs
 
 	def __MutateChild(self):
 		for index in range(self.__maxSizeOfPopulation, len(self.__Population),1):
@@ -36,7 +38,6 @@ class EvolutionAlgorithm():
 
 			newParameterB = self.__Population[index].GetParameterB() + random.uniform(-self.__parameterMutator,self.__parameterMutator)
 			self.__Population[index].SetParameterB(newParameterB) 
-		print("Mutated")
 
 	def __Selection(self):
 		self.__Population.sort()
@@ -45,7 +46,6 @@ class EvolutionAlgorithm():
 		for populationStep in range(0,(self.__maxSizeOfPopulation - 1), 1):
 			populationIndex = self.__randomFromPopulation(self.__Population)
 			populationAfterSelection.append(self.__Population.pop(populationIndex))
-		print("Selection performed")
 		self.__Population = populationAfterSelection
 
 	def __randomFromPopulation(self, population):

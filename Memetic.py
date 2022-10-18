@@ -1,16 +1,13 @@
-import PowellMethod
-import EvolutionAlgorithm
-
 class MemeticAlgirithm():
-    __Generation = 0
 
-    def __init__(self, initialPopulation):
-        self.__LocalSearchAlgorithm = PowellMethod.PowellMethod()
-        self.__GlobalSearchAlgorithm = EvolutionAlgorithm.EvolutionAlgorithm()
+    def __init__(self, LocalSearchAlgorithm, GlobalSearchAlgorithm, initialPopulation, maxGenerationNumber):
+        self.__LocalSearchAlgorithm = LocalSearchAlgorithm
+        self.__GlobalSearchAlgorithm = GlobalSearchAlgorithm
         self.__population = initialPopulation
+        self.__maxGenerationNumber = maxGenerationNumber
+        self.__Generation = 0
 
     def Optimize(self):
-        print("Optimization starter")
         while self.__IsEnded() == False:
             self.__LocalSearch()
             self.__GlobalSearch()
@@ -18,14 +15,11 @@ class MemeticAlgirithm():
         return self.__population[0]
 
     def __LocalSearch(self):
-        print("Local search starter")
         self.__population = self.__LocalSearchAlgorithm.Optimize2D(self.__population)
 
     def __GlobalSearch(self):
-        print("Global search starter")
         self.__population = self.__GlobalSearchAlgorithm.RunAlgorithm(self.__population)
 
     def __IsEnded(self):
-        print("End condition veryfied")
         self.__Generation+=1
-        return (self.__Generation != 1)
+        return (self.__Generation == (self.__maxGenerationNumber+1))
