@@ -41,7 +41,7 @@ class FunctionMock(Function.Function):
 
 class Bohachevsky1Function(Function.Function): #maximum f(0,0) = 0 if x_i in <-10,10>
     def CalculateValue(self, x1, x2):
-        return -(x1*x1 + 2*x2*x2 - 0.3*math.cos(3*math.pi*x2) - 0.4*math.cos(4*math.pi*x2) + 0.7)
+        return -(x1*x1 + 2*x2*x2 - 0.3*math.cos(3*math.pi*x1) - 0.4*math.cos(4*math.pi*x2) + 0.7)
 
 class BoothFunction(Function.Function): #maximum f(1,3) = 0 if x_i in <-10,10>
     def CalculateValue(self, x1, x2):
