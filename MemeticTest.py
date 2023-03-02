@@ -88,11 +88,11 @@ class MemeticTest(unittest.TestCase):
                              Sample.Sample(-2, 3, functionUnderTest, boundaryA, boundaryB),
                              Sample.Sample(-1.23, 4.43, functionUnderTest, boundaryA, boundaryB),
                              Sample.Sample(5, -5, functionUnderTest, boundaryA, boundaryB)]
-        maxStepWithoutImprovement = 4
+        maxStepWithoutImprovement = 5
         powellMethod = PowellMethod.PowellMethod(maxStepWithoutImprovement)
         maxSizeOfPopulation = 9
         evolutionAlgorithm = EvolutionAlgorithm.EvolutionAlgorithm(maxSizeOfPopulation)
-        maxGenerationNumber = 100
+        maxGenerationNumber = 300
         memetic = Memetic.MemeticAlgirithm(powellMethod, evolutionAlgorithm, initialPopulation, maxGenerationNumber)
 
         bestSpecimen = memetic.Optimize()

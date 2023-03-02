@@ -63,4 +63,19 @@ class EvolutionAlgorithmTestSorted(unittest.TestCase):
         newPopulationLenght = len(population)
                   
         self.assertTrue(newPopulationLenght<populationLenght)
-        self.assertEqual(population.count(greatestSample), 1)
+        self.assertEqual(evolution._EvolutionAlgorithm__bestSpecimen, greatestSample)
+
+    def test_IsEndedFirstTime(self):
+        evolution = EvolutionAlgorithm.EvolutionAlgorithm(7)
+        function = FunctionToSupportTests.OneFirstParameterSquare(-1,0,0)
+        greatestSample = Sample.Sample(0,0,function, [-10, 10], [-10,10])
+        population = [Sample.Sample(1,2,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(4,4,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(5,5,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(6,6,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(7,7,function, [-10, 10], [-10,10]), 
+                      Sample.Sample(8,8,function, [-10, 10], [-10,10]),
+                      greatestSample]
+        evolution._EvolutionAlgorithm__Population = population
+        self.assertFalse(evolution._EvolutionAlgorithm__IsEnded())
+        self.assertEqual(evolution._EvolutionAlgorithm__oldBestSpecimen, greatestSample)

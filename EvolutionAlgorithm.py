@@ -1,16 +1,29 @@
 import Sample
 import random
 import copy
+import numpy as np
 
 class EvolutionAlgorithm():
 
 	__maxSizeOfPopulation = 5
 	__parameterMutator = 0.1
 
-	def __init__(self, maxSizeOfPopulation, parameterMutator = 0.1):
+	def __init__(self, maxSizeOfPopulation, parameterMutator = 0.1, maxIterationNumber = 1000):
 		self.__Population = []
 		self.__maxSizeOfPopulation = maxSizeOfPopulation
 		self.__parameterMutator = parameterMutator
+		self.__maxIterationNumber = maxIterationNumber
+		self.__wasBestSpeciment = False
+		self.__bestSpecimen = np.NaN
+		self.__wasOldBestSpeciment = False
+		self.__oldBestSpecimen = np.NaN
+
+	def Optimize(self, initialPopulation):
+		self.__Population = initialPopulation
+		while self.__IsEnded() == False:
+			for iterationNumber in range(self.__maxIterationNumber):
+			    self.RunAlgorithm(self.__Population)
+		return self.__bestSpecimen
 
 	def RunAlgorithm(self, population):
 		self.__Population = population
@@ -41,14 +54,14 @@ class EvolutionAlgorithm():
 
 	def __Selection(self):
 		self.__Population.sort()
+		self.__ActualiseBestSolution()
 		populationAfterSelection = []
-		populationAfterSelection.append(self.__Population.pop(0))
-		for populationStep in range(0,(self.__maxSizeOfPopulation - 1), 1):
-			populationIndex = self.__randomFromPopulation(self.__Population)
+		for populationStep in range(0,(self.__maxSizeOfPopulation), 1):
+			populationIndex = self.__RandomFromPopulation(self.__Population)
 			populationAfterSelection.append(self.__Population.pop(populationIndex))
 		self.__Population = populationAfterSelection
 
-	def __randomFromPopulation(self, population):
+	def __RandomFromPopulation(self, population):
 		denominator = 0
 		for i in range(1, len(population)+1, 1):
 		    denominator += i
@@ -61,3 +74,18 @@ class EvolutionAlgorithm():
 			else:
 				backwardCounting -= 1
 				nominator += backwardCounting
+
+	def __IsEnded(self):
+		if self.__wasOldBestSpeciment ==False or self.__oldBestSpecimen < self.__bestSpecimen:
+			self.__oldBestSpecimen = self.__bestSpecimen
+			self.__wasOldBestSpeciment  = True
+			return False
+		else:
+			return True
+
+	def __ActualiseBestSolution(self):
+		self.__Population.sort()
+		bestSpecimen = self.__Population[0]
+		if self.__wasBestSpeciment == False or self.__bestSpecimen < bestSpecimen:
+			self.__bestSpecimen = bestSpecimen
+			self.__wasBestSpeciment = True
