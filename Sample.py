@@ -1,4 +1,6 @@
 import Function
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Sample():
     def __init__(self, parameterA, parameterB, function, boudaryA, boudaryB):
@@ -38,5 +40,29 @@ class Sample():
     def __gt__(self, value):
         return self.GetValue()<value.GetValue()
 
+    def __lt__(self, value):
+        return self.GetValue()>value.GetValue()
+
     def __eq__(self, value):
         return self.GetValue()==value.GetValue()
+
+def plotPopulationOfSamples(population):
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(projection='3d')
+
+    n = 100
+
+    # For each set of style and range settings, plot n random points in the box
+    # defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
+    for sample in population:
+        xs = sample.GetParameterA()
+        ys = sample.GetParameterB()
+        zs = sample.GetValue()
+        ax.scatter(xs, ys, zs)
+
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    ax.set_zlabel('Z Label')
+
+    plt.show()

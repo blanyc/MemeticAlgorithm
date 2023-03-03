@@ -8,8 +8,8 @@ class EvolutionAlgorithm():
 	__maxSizeOfPopulation = 5
 	__parameterMutator = 0.1
 
-	def __init__(self, maxSizeOfPopulation, parameterMutator = 0.1, maxIterationNumber = 1000):
-		self.__Population = []
+	def __init__(self, maxSizeOfPopulation, initialPopulation = [], parameterMutator = 1, maxIterationNumber = 1000):
+		self.__Population = initialPopulation
 		self.__maxSizeOfPopulation = maxSizeOfPopulation
 		self.__parameterMutator = parameterMutator
 		self.__maxIterationNumber = maxIterationNumber
@@ -18,11 +18,11 @@ class EvolutionAlgorithm():
 		self.__wasOldBestSpeciment = False
 		self.__oldBestSpecimen = np.NaN
 
-	def Optimize(self, initialPopulation):
-		self.__Population = initialPopulation
+	def Optimize(self):
+		self.__ActualiseBestSolution()
 		while self.__IsEnded() == False:
 			for iterationNumber in range(self.__maxIterationNumber):
-			    self.RunAlgorithm(self.__Population)
+				self.RunAlgorithm(self.__Population)			
 		return self.__bestSpecimen
 
 	def RunAlgorithm(self, population):
@@ -76,7 +76,7 @@ class EvolutionAlgorithm():
 				nominator += backwardCounting
 
 	def __IsEnded(self):
-		if self.__wasOldBestSpeciment ==False or self.__oldBestSpecimen < self.__bestSpecimen:
+		if self.__wasOldBestSpeciment == False or self.__oldBestSpecimen > self.__bestSpecimen:
 			self.__oldBestSpecimen = self.__bestSpecimen
 			self.__wasOldBestSpeciment  = True
 			return False
@@ -86,6 +86,15 @@ class EvolutionAlgorithm():
 	def __ActualiseBestSolution(self):
 		self.__Population.sort()
 		bestSpecimen = self.__Population[0]
-		if self.__wasBestSpeciment == False or self.__bestSpecimen < bestSpecimen:
+		
+
+		if self.__wasBestSpeciment == False:
 			self.__bestSpecimen = bestSpecimen
 			self.__wasBestSpeciment = True
+
+		bestspecimen_value = bestSpecimen.GetValue()
+		oldbestspecimen_value = self.__bestSpecimen.GetValue()
+
+		if oldbestspecimen_value < bestspecimen_value:
+		    self.__bestSpecimen = bestSpecimen
+
